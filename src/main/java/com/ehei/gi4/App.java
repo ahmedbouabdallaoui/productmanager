@@ -34,6 +34,16 @@ public class App {
                 afficherProduit(p);
             }
 
+            System.out.println("\nMISE À JOUR D’UN PRODUIT");
+            Produit nouveau = new Produit(1L, "Clavier Gaming", 350.0, 8);
+            service.mettreAJourProduit(1L, nouveau);
+
+            afficherProduit(service.obtenirProduit(1L));
+
+            System.out.println("\nSUPPRESSION D’UN PRODUIT");
+            service.supprimerProduit(2L);
+            System.out.println("Produit avec ID 2 supprimé");
+
         } catch (Exception e) {
             System.err.println("Erreur : " + e.getMessage());
         }

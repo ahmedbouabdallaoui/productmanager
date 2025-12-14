@@ -45,4 +45,24 @@ public class ProduitService {
     public List<Produit> obtenirTousProduits() {
         return produits;
     }
+    public void mettreAJourProduit(Long id, Produit nouveauProduit) {
+        Produit produit = obtenirProduit(id);
+
+        // Vérifier si le nouveau nom existe déjà
+        for (Produit p : produits) {
+            if (!p.getId().equals(id) && p.getNom().equalsIgnoreCase(nouveauProduit.getNom())) {
+                throw new ProduitExistantException("Ce nom existe déjà");
+            }
+        }
+
+        produit.setNom(nouveauProduit.getNom());
+        produit.setPrix(nouveauProduit.getPrix());
+        produit.setQuantite(nouveauProduit.getQuantite());
+    }
+
+    // DELETE
+    public void supprimerProduit(Long id) {
+        Produit produit = obtenirProduit(id);
+        produits.remove(produit);
+    }
 }

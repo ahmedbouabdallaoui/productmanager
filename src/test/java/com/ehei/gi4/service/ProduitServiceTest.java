@@ -3,12 +3,10 @@ package com.ehei.gi4.service;
 import com.ehei.gi4.exception.ProduitExistantException;
 import com.ehei.gi4.exception.ProduitNonTrouveException;
 import com.ehei.gi4.model.Produit;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 class ProduitServiceTest {
 
@@ -65,6 +63,8 @@ class ProduitServiceTest {
         });
     }
 
+
+
     @Test
     void testObtenirTous() {
         service.ajouterProduit(new Produit(1L, "Produit1", 10.0, 5));
@@ -74,4 +74,39 @@ class ProduitServiceTest {
     }
 
 
+    @Test
+    void testMettreAJour() {
+        service.ajouterProduit(new Produit(1L, "Ordinateur", 999.99, 10));
+
+        Produit maj = new Produit(1L, "PC Portable", 1299.99, 15);
+        service.mettreAJourProduit(1L, maj);
+
+        Produit resultat = service.obtenirProduit(1L);
+        assertEquals("PC Portable", resultat.getNom());
+    }
+
+    @Test
+    void testMajInexistant() {
+        assertThrows(ProduitNonTrouveException.class, () -> {
+            service.mettreAJourProduit(999L, new Produit(1L, "Test", 10.0, 5));
+        });
+    }
+
+    // TESTS DELETE
+    @Test
+    void testSupprimer() {
+        service.ajouterProduit(new Produit(1L, "Ordinateur", 999.99, 10));
+        service.supprimerProduit(1L);
+
+        assertThrows(ProduitNonTrouveException.class, () -> {
+            service.obtenirProduit(1L);
+        });
+    }
+
+    @Test
+    void testSupprimerInexistant() {
+        assertThrows(ProduitNonTrouveException.class, () -> {
+            service.supprimerProduit(999L);
+        });
+    }
 }
