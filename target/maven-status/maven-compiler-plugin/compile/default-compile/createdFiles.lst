@@ -1,5 +1,0 @@
-com\ehei\gi4\App.class
-com\ehei\gi4\service\ProduitService.class
-com\ehei\gi4\exception\ProduitExistantException.class
-com\ehei\gi4\model\Produit.class
-com\ehei\gi4\exception\ProduitNonTrouveException.class
